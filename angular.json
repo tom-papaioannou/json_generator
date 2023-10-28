@@ -21,7 +21,7 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
-              "src/favicon.ico",
+              "src/RadarLogo.png",
               "src/assets"
             ],
             "styles": [
@@ -94,5 +94,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }
