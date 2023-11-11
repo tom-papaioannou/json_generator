@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Level } from '../models/level';
 
 @Component({
   selector: 'app-generator-view',
@@ -7,28 +8,24 @@ import { Component } from '@angular/core';
 })
 export class GeneratorViewComponent {
 
-  calculateLevelsJson(): string {
+  levelsJson: any[] = [];
 
-    //
-    // Algorithm for 
-    // creating
-    // levels for 
-    // Royal Gardener
-    //
+  calculateLevelsJson(): any[] {
 
-    const levelsJson =`\'levels\' : {
-      \'level01\' : {
-        \'x\' : 1
-      }
-    }`;
+    this.levelsJson = [];
+    for (let i = 1; i <= 30; i++) {
+      this.levelsJson.push(new Level(i).getLevel());
+    }
 
-    return levelsJson;
+    return this.levelsJson;
   }
 
   generate() {
-    var sJson = JSON.stringify(this.calculateLevelsJson());
+    this.calculateLevelsJson();
+    var wrappedData = { levels: this.levelsJson };
+    var sJson = JSON.stringify(wrappedData, null, 2);
     var element = document.createElement('a');
-    element.setAttribute('href', "data:text/json;charset=UTF-8," + encodeURIComponent(this.calculateLevelsJson()));
+    element.setAttribute('href', "data:text/json;charset=UTF-8," + encodeURIComponent(sJson));
     element.setAttribute('download', "Levels.json");
     element.style.display = 'none';
     document.body.appendChild(element);
