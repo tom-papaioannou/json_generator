@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { Level } from '../models/level';
-import { Round } from '../models/round';
+import { LevelGeneratorService } from '../services/level-generator.service';
 
 @Component({
   selector: 'app-generator-view',
@@ -11,35 +10,13 @@ export class GeneratorViewComponent {
 
   levelsJson: any[] = [];
 
-  calculateLevelsJson(): any[] {
+  constructor(private levelGeneratorService: LevelGeneratorService) { }
 
+  downloadLevels() {
     this.levelsJson = [];
     for (let i = 1; i <= 30; i++) {
-      let level = this.generateNewLevel(i);
-      this.levelsJson.push(level);
+      this.levelsJson.push(this.levelGeneratorService.generateNewLevel(i));
     }
-
-    return this.levelsJson;
-  }
-
-
-  generateNewLevel(level: number) : Level {
-    let temp_level: Level = new Level();
-    temp_level.level = level;
-    temp_level.reward = 0;
-
-    // Calculate rounds from level
-    let roundsCounter = 1;
-
-    for (let currentRoundNumber = 1; currentRoundNumber <= roundsCounter; currentRoundNumber++) {
-      let round = new Round(currentRoundNumber);
-      temp_level.rounds.push(round);
-    }
-    return temp_level;
-  }
-
-  generate() {
-    this.calculateLevelsJson();
     var wrappedData = { levels: this.levelsJson };
     var sJson = JSON.stringify(wrappedData, null, 2);
     var element = document.createElement('a');

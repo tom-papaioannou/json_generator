@@ -1,9 +1,4 @@
-export class Flower{
-    roots: number;
-    rootTiles: number;
-
-    constructor (x: number) {
-        this.roots = x;
-        this.rootTiles = 5;
-    }
+export class Flower {
+    roots: number = 0;
+    rootTiles: number = 0;
 }
