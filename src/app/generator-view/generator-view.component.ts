@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Level } from '../models/level';
+import { Round } from '../models/round';
 
 @Component({
   selector: 'app-generator-view',
@@ -14,10 +15,27 @@ export class GeneratorViewComponent {
 
     this.levelsJson = [];
     for (let i = 1; i <= 30; i++) {
-      this.levelsJson.push(new Level(i).getLevel());
+      let level = this.generateNewLevel(i);
+      this.levelsJson.push(level);
     }
 
     return this.levelsJson;
+  }
+
+
+  generateNewLevel(level: number) : Level {
+    let temp_level: Level = new Level();
+    temp_level.level = level;
+    temp_level.reward = 0;
+
+    // Calculate rounds from level
+    let roundsCounter = 1;
+
+    for (let currentRoundNumber = 1; currentRoundNumber <= roundsCounter; currentRoundNumber++) {
+      let round = new Round(currentRoundNumber);
+      temp_level.rounds.push(round);
+    }
+    return temp_level;
   }
 
   generate() {
